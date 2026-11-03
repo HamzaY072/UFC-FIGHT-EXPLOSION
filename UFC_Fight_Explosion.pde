@@ -81,6 +81,11 @@ void draw() {
   textSize(20);
   text("TOTAL FIGHTS: " + fightCount, width / 2, 130);
   text("UFC 2024 DATASET", width / 2, 160);
+  textAlign(CENTER);
+  textSize(16);
+text("KNOCKOUTS: " + totalKnockouts, width / 2, 200);
+text("SUBMISSIONS: " + totalSubmissions, width / 2, 225);
+text("DECISIONS: " + totalDecisions, width / 2, 250);
 
   noStroke();
   fill(255, 40, 60);
