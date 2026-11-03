@@ -27,7 +27,8 @@ void setup() {
 
     for (int i = 0; i < fightCount; i++) {
       TableRow row = fights.getRow(i);
-
+totalRedStrikes += row.getInt("fighter_a_sig_str_landed");
+totalBlueStrikes += row.getInt("fighter_b_sig_str_landed");
       fightObjects[i] = new Fight(
         row.getString("event_name"),
         row.getString("weight_class"),
@@ -86,6 +87,8 @@ void draw() {
 text("KNOCKOUTS: " + totalKnockouts, width / 2, 200);
 text("SUBMISSIONS: " + totalSubmissions, width / 2, 225);
 text("DECISIONS: " + totalDecisions, width / 2, 250);
+text("RED CORNER STRIKES: " + totalRedStrikes, width / 2, 275);
+text("BLUE CORNER STRIKES: " + totalBlueStrikes, width / 2, 300);
 
   noStroke();
   fill(255, 40, 60);
