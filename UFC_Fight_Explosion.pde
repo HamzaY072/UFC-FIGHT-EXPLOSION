@@ -14,7 +14,6 @@ int totalBlueStrikes = 0;
 
 int invalidRows = 0;
 
-// Setup
 void setup() {
   size(1000, 700);
 
@@ -49,11 +48,17 @@ void setup() {
         else if (finish.equalsIgnoreCase("Submission")) {
           totalSubmissions++;
         } 
-        else if (finish.equalsIgnoreCase("Decision")) {
+        else if (finish.equalsIgnoreCase("Decision") ||
+finish.equalsIgnoreCase("Technical Decision")) {
           totalDecisions++;
         }
       }
     }
+println("UFC dataset loaded successfully!");
+println("Number of fights: " + fightCount);
+println("Knockouts: " + totalKnockouts);
+println("Submissions: " + totalSubmissions);
+println("Decisions: " + totalDecisions);
   } 
   else {
     println("Error: CSV file could not be loaded.");
@@ -65,11 +70,9 @@ int getTotalStrikes(int redStrikes, int blueStrikes) {
   return redStrikes + blueStrikes;
 }
 
-// Draw
 void draw() {
   background(12, 12, 20);
 
-  // Draw the title
   fill(255);
   textAlign(CENTER);
   textSize(32);
@@ -79,23 +82,20 @@ void draw() {
   text("TOTAL FIGHTS: " + fightCount, width / 2, 130);
   text("UFC 2024 DATASET", width / 2, 160);
 
-  // Red corner
   noStroke();
   fill(255, 40, 60);
   ellipse(width / 2 - 180, height / 2, 150, 150);
 
-  // Blue corner
   fill(40, 120, 255);
   ellipse(width / 2 + 180, height / 2, 150, 150);
 
-  // Corner labels
   fill(255);
   textSize(18);
   text("RED CORNER", width / 2 - 180, height / 2 + 110);
   text("BLUE CORNER", width / 2 + 180, height / 2 + 110);
 }
 
-// Fight class
+
 class Fight {
   String eventName;
   String weightClass;
