@@ -6,18 +6,13 @@ int totalKnockouts = 0;
 int totalSubmissions = 0;
 int totalDecisions = 0;
 
-void setup() {
-size(1200, 900);
-smooth();
-
+void setup() {size(1200, 900);
 matches = loadTable("UFC_2024_Main_Card_Fights_CSV.csv", "header");
 
-if (matches == null) {
-println("Could not load the UFC CSV file.");
+if (matches == null) {println("Could not load the UFC CSV file.");
 println("Put UFC_2024_Main_Card_Fights_CSV.csv inside the data folder.");
 exit();
-return;
-}
+return;}
 
 fightCount = matches.getRowCount();
 fightObjects = new Fight[fightCount];
@@ -30,24 +25,20 @@ fightObjects[i] = new Fight(eventDate, finishDetails);
 
 String finish = finishDetails == null ? "" : finishDetails.toLowerCase();
 
-if (finish.contains("ko") || finish.contains("tko")) {
-totalKnockouts++;
-} else if (finish.contains("submission")) {
-totalSubmissions++;
-} else if (finish.contains("decision")) {
-totalDecisions++;
-}
-}
+if (finish.contains("ko") || finish.contains("tko")) 
+{totalKnockouts++;} 
+else if (finish.contains("submission")) {
+totalSubmissions++;}
+else if (finish.contains("decision")) {totalDecisions++;}}
 
 println("UFC dataset loaded successfully.");
 println("Number of fights: " + fightCount);
 println("Knockouts: " + totalKnockouts);
 println("Submissions: " + totalSubmissions);
-println("Decisions: " + totalDecisions);
-}
+println("Decisions: " + totalDecisions);}
 
-void draw() {
-background(0);
+void draw()
+{background(0);
 
 fill(230, 50, 50);
 textAlign(CENTER);
@@ -88,71 +79,51 @@ strokeWeight(2);
 line(graphLeft, graphTop, graphLeft, graphBottom);
 line(graphLeft, graphBottom, graphRight, graphBottom);
 
-String[] months = {
-"JANUARY", "FEBRUARY", "MARCH", "APRIL",
+String[] months = {"JANUARY", "FEBRUARY", "MARCH", "APRIL",
 "MAY", "JUNE", "JULY", "AUGUST",
-"SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
-};
+"SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
 
 textSize(12);
 textAlign(RIGHT);
 
-for (int m = 0; m < 12; m++) {
-float y = graphBottom -
-(m * (graphBottom - graphTop) / 11.0);
+for (int m = 0; m < 12; m++) {float y = graphBottom -(m * (graphBottom - graphTop) / 11.0);
 
 stroke(90, 90, 100);
 strokeWeight(1);
 line(graphLeft, y, graphRight, y);
 
 fill(255);
-text(months[m], graphLeft - 12, y + 4);
-}
+text(months[m], graphLeft - 12, y + 4);}
 
 textAlign(CENTER);
 textSize(12);
 
-for (int n = 0; n <= 25; n += 5) {
-float x = graphLeft + (n / 25.0) *
-(graphRight - graphLeft);
+for (int n = 0; n <= 25; n += 5) {float x = graphLeft + (n / 25.0) *(graphRight - graphLeft);
 
 stroke(150);
 line(x, graphBottom - 3, x, graphBottom + 3);
 
 fill(255);
-text(n, x, graphBottom + 20);
-}
+text(n, x, graphBottom + 20);}
 
-for (int i = 0; i < fightCount; i++) {
-Fight f = fightObjects[i];
+for (int i = 0; i < fightCount; i++) 
+{Fight f = fightObjects[i];
 
-if (f == null || f.eventDate == null ||
-f.finishDetails == null) {
-continue;
-}
+if (f == null || f.eventDate == null || f.finishDetails == null) {continue;}
 
 int month = getMonthNumber(f.eventDate);
 
-if (month < 1 || month > 12) {
-continue;
-}
+if (month < 1 || month > 12) {continue;}
 
 // Find the fight's position within its month
 int positionInMonth = 0;
 
 for (int j = 0; j < i; j++) {
-if (fightObjects[j] != null &&
-getMonthNumber(fightObjects[j].eventDate) == month) {
-positionInMonth++;
-}
-}
+if (fightObjects[j] != null && getMonthNumber(fightObjects[j].eventDate) == month) {positionInMonth++;}}
 
-float x = graphLeft +
-(positionInMonth + 1) *
-(graphRight - graphLeft) / 25.0;
+float x = graphLeft + (positionInMonth + 1) * (graphRight - graphLeft) / 25.0;
 
-float y = graphBottom -
-(month - 1) * (graphBottom - graphTop) / 11.0;
+float y = graphBottom - (month - 1) * (graphBottom - graphTop) / 11.0;
 
 String finish = f.finishDetails.toLowerCase();
 
@@ -162,9 +133,7 @@ fill(230, 50, 50); // Red: KO/TKO
 fill(45, 130, 230); // Blue: Submission
 } else if (finish.contains("decision")) {
 fill(50, 200, 90); // Green: Decision
-} else {
-continue;
-}
+} else  {continue;}
 
 noStroke();
 ellipse(x, y, 11, 11);
@@ -194,14 +163,10 @@ text("SUBMISSION", 575, 875);
 fill(50, 200, 90);
 ellipse(780, 870, 13, 13);
 fill(255);
-text("DECISION", 795, 875);
-}
+text("DECISION", 795, 875);}
 
 int getMonthNumber(String date) {
-try {
-java.text.SimpleDateFormat format =
-new java.text.SimpleDateFormat("MMMM dd, yyyy",
-java.util.Locale.ENGLISH);
+try {java.text.SimpleDateFormat format =new java.text.SimpleDateFormat("MMMM dd, yyyy",java.util.Locale.ENGLISH);
 
 format.setLenient(false);
 
@@ -212,13 +177,10 @@ java.util.Calendar.getInstance();
 
 calendar.setTime(parsedDate);
 
-return calendar.get(java.util.Calendar.MONTH) + 1;
-}
-catch (Exception e) {
-println("Could not read event date: " + date);
-return -1;
-}
-}
+return calendar.get(java.util.Calendar.MONTH) + 1;}
+catch (Exception e) 
+{println("Could not read event date: " + date);
+return -1;}}
 
 // Fight class
 class Fight {
@@ -227,6 +189,4 @@ String finishDetails;
 
 Fight(String eventDate, String finishDetails) {
 this.eventDate = eventDate;
-this.finishDetails = finishDetails;
-}
-}
+this.finishDetails = finishDetails;}}
